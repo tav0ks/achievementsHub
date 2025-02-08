@@ -50,14 +50,50 @@ class SteamService
     }
 
     /**
-     * Retrieves the list of games owned by a player.
+     * Constructs the URL for a Steam game image.
+     *
+     * @param int $appId Game App ID
+     * @param string|null $imageHash Image hash provided by Steam API
+     * @return string|null Constructed image URL or null if not available
+     */
+    private function buildImageUrl(int $appId, ?string $imageHash): ?string
+    {
+        if (empty($imageHash)) {
+            return null;
+        }
+
+        return "http://media.steampowered.com/steamcommunity/public/images/apps/{$appId}/{$imageHash}.jpg";
+    }
+
+    /**
+     * Retrieves the list of games owned by a player, including game name and logo.
      *
      * @param string $steamId Steam user ID
-     * @return array|null Owned games data
+     * @return array|null Owned games data with names and logos
      */
     public function getOwnedGames(string $steamId): ?array
     {
-        return $this->makeRequest('IPlayerService/GetOwnedGames/v0001', ['steamid' => $steamId]);
+        $response = $this->makeRequest('IPlayerService/GetOwnedGames/v0001', [
+            'steamid' => $steamId,
+            'include_appinfo' => true,
+            'format' => 'json'
+        ]);
+
+        if (!$response || empty($response['response']['games'])) {
+            return null;
+        }
+
+        $games = array_map(function ($game) use ($steamId) {
+            return [
+                'appid' => $game['appid'],
+                'name' => $game['name'] ?? 'Unknown Game',
+                'icon' => $this->buildImageUrl($game['appid'], $game['img_icon_url'] ?? null),
+                'playtime_forever' => $game['playtime_forever'] ?? 0, // Minutos jogados
+                'stats_url' => "http://steamcommunity.com/profiles/{$steamId}/stats/{$game['appid']}",
+            ];
+        }, $response['response']['games']);
+
+        return $games;
     }
 
     /**
