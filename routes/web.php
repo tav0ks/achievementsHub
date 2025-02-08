@@ -18,6 +18,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/getOwnedGames/{steam_id}', [SteamController::class, 'getOwnedGames']);
+Route::prefix('steam')->group(function () {
+    Route::get('owned-games/{steamId}', [SteamController::class, 'getOwnedGames']);
+    Route::get('news/{appId}', [SteamController::class, 'getNewsForApp']);
+    Route::get('achievements/{appId}', [SteamController::class, 'getGlobalAchievementPercentagesForApp']);
+    Route::get('player-summaries', [SteamController::class, 'getPlayerSummaries']);
+    Route::get('friends/{steamId}', [SteamController::class, 'getFriendList']);
+    Route::get('player-achievements/{steamId}/{appId}', [SteamController::class, 'getPlayerAchievements']);
+    Route::get('user-stats/{steamId}/{appId}', [SteamController::class, 'getUserStatsForGame']);
+    Route::get('recently-played/{steamId}', [SteamController::class, 'getRecentlyPlayedGames']);
+});
 
 require __DIR__.'/auth.php';
