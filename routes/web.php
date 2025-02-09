@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SteamController;
 use Illuminate\Support\Facades\Route;
@@ -8,9 +9,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,6 +26,6 @@ Route::prefix('steam')->group(function () {
     Route::get('player-achievements/{steamId}/{appId}', [SteamController::class, 'getPlayerAchievements']);
     Route::get('user-stats/{steamId}/{appId}', [SteamController::class, 'getUserStatsForGame']);
     Route::get('recently-played/{steamId}', [SteamController::class, 'getRecentlyPlayedGames']);
-});
+})->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

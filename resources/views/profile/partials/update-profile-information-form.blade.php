@@ -47,6 +47,12 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="steam_id" :value="__('Steam ID')" />
+            <x-text-input id="steam_id" name="steam_id" type="text" class="mt-1 block w-full" :value="old('steam_id', $user->steam_id)" required autofocus autocomplete="steam_id" />
+            <x-input-error class="mt-2" :messages="$errors->get('steam_id')" />
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

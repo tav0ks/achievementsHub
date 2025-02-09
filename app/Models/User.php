@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'steam_id',
         'password',
     ];
 
@@ -44,5 +45,37 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the user's Steam ID.
+     */
+    public function getSteamId(): ?string
+    {
+        return $this->steam_id;
+    }
+
+    /**
+     * Set the user's Steam ID.
+     */
+    public function setSteamId(string $steamId): void
+    {
+        $this->steam_id = $steamId;
+    }
+
+    /**
+     * Determine if the user has a Steam ID.
+     */
+    public function hasSteamId(): bool
+    {
+        return $this->steam_id !== null;
+    }
+
+    /**
+     * Get the user's Steam profile URL.
+     */
+    public function getSteamProfileUrl(): ?string
+    {
+        return $this->hasSteamId() ? "https://steamcommunity.com/profiles/{$this->steam_id}" : null;
     }
 }
