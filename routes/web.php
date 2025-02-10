@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SteamController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SteamController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RetroAchievementsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,5 +28,12 @@ Route::prefix('steam')->group(function () {
     Route::get('user-stats/{steamId}/{appId}', [SteamController::class, 'getUserStatsForGame']);
     Route::get('recently-played/{steamId}', [SteamController::class, 'getRecentlyPlayedGames']);
 })->middleware(['auth', 'verified']);
+
+Route::prefix('retro-achievements')->group(function () {
+    Route::get('/game/{gameId}', [RetroAchievementsController::class, 'getGameSummary']);
+    Route::get('/user/{username}/game/{gameId}/achievements', [RetroAchievementsController::class, 'getUserAchievements']);
+    Route::get('/user/{username}/recent-games', [RetroAchievementsController::class, 'getRecentlyPlayedGames']);
+    Route::get('/top-ten-users', [RetroAchievementsController::class, 'getTopTenUsers']);
+});
 
 require __DIR__.'/auth.php';
