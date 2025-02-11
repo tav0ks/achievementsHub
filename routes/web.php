@@ -5,6 +5,7 @@ use App\Http\Controllers\SteamController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RetroAchievementsController;
+use App\Http\Controllers\Auth\GoogleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,5 +36,9 @@ Route::prefix('retro-achievements')->group(function () {
     Route::get('/user/{username}/recent-games', [RetroAchievementsController::class, 'getRecentlyPlayedGames']);
     Route::get('/top-ten-users', [RetroAchievementsController::class, 'getTopTenUsers']);
 });
+
+Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+
 
 require __DIR__.'/auth.php';

@@ -25,7 +25,7 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-
+        
         $steamId = $user->steam_id;
 
         $ownedGames = $this->steamService->getOwnedGames($steamId);
