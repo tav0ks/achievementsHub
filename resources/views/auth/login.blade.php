@@ -24,20 +24,15 @@
         </div>
 
         <!-- Remember Me -->
-        <div class="block mt-4">
+        <div class="flex justify-between items-center mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox"
                     class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
                     name="remember">
                 <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
             </label>
-        </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a href="{{ route('auth.google') }}"
-                class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 mr-2">Registro
-                com Google</a>
-            @if (Route::has('password.request'))
+             @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                     href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
@@ -47,6 +42,16 @@
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
+        </div>
+
+        <div class="relative flex justify-center my-6">
+            <span class="px-2 text-gray-500">or</span>
+        </div>
+
+        <div class="flex justify-center space-x-4">
+            <a href="{{ route('auth.google') }}" class="w-10 h-10 bg-red-600 text-white rounded-full hover:bg-red-700x flex justify-center items-center">
+                <i class="fab fa-google"></i>
+            </a>
         </div>
     </form>
 </x-guest-layout>

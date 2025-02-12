@@ -28,16 +28,6 @@ class DashboardController extends Controller
         
         $steamId = $user->steam_id;
 
-        $ownedGames = $this->steamService->getOwnedGames($steamId);
-
-        $recentlyPlayedGames = $this->steamService->getRecentlyPlayedGames($steamId);
-
-        $playerSummaries = $this->steamService->getPlayerSummaries([$steamId]);
-
-        return view('dashboard', [
-            'ownedGames' => $ownedGames,
-            'recentlyPlayedGames' => $recentlyPlayedGames,
-            'playerSummaries' => $playerSummaries,
-        ]);
+        return view('dashboard');
     }
 }
