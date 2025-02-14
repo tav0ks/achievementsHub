@@ -36,14 +36,18 @@ class DashboardController extends Controller
             $recentlyPlayedResponse = $this->steamService->getRecentlyPlayedGames($user->steam_id);
             $recentlyPlayedGames = $recentlyPlayedResponse['response']['games'] ?? [];
             foreach ($recentlyPlayedGames as &$game) {
-                $game['icon'] = "http://media.steampowered.com/steamcommunity/public/images/apps/{$game['appid']}/{$game['img_icon_url']}.jpg";
+                $game['header'] = "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/{$game['appid']}/header.jpg";
+                $game['icon'] = $this->steamService->buildImageUrl($game['appid'], $game['img_icon_url'] ?? null);
             }
             $steamData['recentlyPlayed'] = $recentlyPlayedGames;
 
-            // Owned Games
+            // Owned Games com headers
             $ownedGames = $this->steamService->getOwnedGames($user->steam_id);
             $steamData['ownedGamesCount'] = count($ownedGames ?? []);
-            $steamData['topGames'] = array_slice($ownedGames ?? [], 0, 5);
+            $steamData['topGames'] = array_map(function ($game) {
+                $game['header'] = "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/{$game['appid']}/header.jpg";
+                return $game;
+            }, array_slice($ownedGames ?? [], 0, 5));
 
             // Friends List
             $friendsListResponse = $this->steamService->getFriendList($user->steam_id);

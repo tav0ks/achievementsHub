@@ -56,7 +56,7 @@ class SteamService
      * @param string|null $imageHash Image hash provided by Steam API
      * @return string|null Constructed image URL or null if not available
      */
-    private function buildImageUrl(int $appId, ?string $imageHash): ?string
+    public function buildImageUrl(int $appId, ?string $imageHash): ?string
     {
         if (empty($imageHash)) {
             return null;

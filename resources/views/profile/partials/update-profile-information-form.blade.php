@@ -49,7 +49,7 @@
 
         <div>
             <x-input-label for="steam_id" :value="__('Steam ID')" />
-            <x-text-input id="steam_id" name="steam_id" type="text" class="mt-1 block w-full" :value="old('steam_id', $user->steam_id)" required autofocus autocomplete="steam_id" />
+            <x-text-input id="steam_id" name="steam_id" type="text" class="mt-1 block w-full" :value="old('steam_id', $user->steam_id)" autofocus autocomplete="steam_id" />
             <x-input-error class="mt-2" :messages="$errors->get('steam_id')" />
         </div>
 

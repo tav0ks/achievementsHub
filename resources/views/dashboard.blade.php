@@ -38,21 +38,31 @@
             </div>
         @endif
 
-        <!-- Jogos Recentes -->
+        <!-- Jogos Recentes com Header -->
         @if (!empty($recentlyPlayed))
             <div class="py-6">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                         <h3 class="text-xl font-semibold text-white mb-4">Jogados Recentemente</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             @foreach ($recentlyPlayed as $game)
-                                <div class="bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition">
-                                    <img src="{{ $game['icon'] }}" alt="{{ $game['name'] }}"
-                                        class="w-16 h-16 mx-auto mb-2 rounded-lg">
-                                    <h4 class="text-lg font-medium text-white text-center">{{ $game['name'] }}</h4>
-                                    <p class="text-gray-300 text-center">
-                                        {{ round($game['playtime_forever'] / 60) }} horas
-                                    </p>
+                                <div
+                                    class="relative group overflow-hidden rounded-lg h-48 hover:transform hover:scale-105 transition-all duration-300">
+                                    <img src="{{ $game['header'] }}" alt="{{ $game['name'] }}"
+                                        class="w-full h-full object-cover absolute inset-0"
+                                        onerror="this.style.display='none'">
+                                    <div
+                                        class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="{{ $game['icon'] }}" alt="Ícone" class="w-12 h-12">
+                                            <div>
+                                                <h4 class="text-lg font-bold text-white">{{ $game['name'] }}</h4>
+                                                <p class="text-gray-300 text-sm">
+                                                    {{ round($game['playtime_forever'] / 60) }} horas jogadas
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -61,24 +71,29 @@
             </div>
         @endif
 
-        <!-- Biblioteca de Jogos -->
+        <!-- Top Jogos da Biblioteca -->
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-white mb-4">Biblioteca</h3>
+                    <h3 class="text-xl font-semibold text-white mb-4">Mais Jogados</h3>
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                         <div class="col-span-2 bg-gray-700 p-6 rounded-lg">
                             <p class="text-3xl font-bold text-white">{{ $ownedGamesCount }}</p>
                             <p class="text-gray-300">Jogos na biblioteca</p>
                         </div>
                         @foreach ($topGames as $game)
-                            <div class="bg-gray-700 p-4 rounded-lg">
-                                <img src="{{ $game['icon'] }}" alt="{{ $game['name'] }}"
-                                    class="w-12 h-12 mx-auto mb-2">
-                                <p class="text-white text-center text-sm">{{ $game['name'] }}</p>
-                                <p class="text-gray-300 text-center text-xs">
-                                    {{ round($game['playtime_forever'] / 60) }}h
-                                </p>
+                            <div
+                                class="relative group overflow-hidden rounded-lg h-48 hover:transform hover:scale-105 transition-all duration-300">
+                                <img src="{{ $game['header'] }}" alt="{{ $game['name'] }}"
+                                    class="w-full h-full object-cover absolute inset-0"
+                                    onerror="this.style.display='none'">
+                                <div
+                                    class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
+                                    <p class="text-white font-medium truncate">{{ $game['name'] }}</p>
+                                    <p class="text-gray-300 text-sm">
+                                        {{ round($game['playtime_forever'] / 60) }}h
+                                    </p>
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -108,6 +123,18 @@
                                 </div>
                             @endforeach
                         </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <!-- Amigos -->
+        @if (!empty($friends))
+            <div class="py-6">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                        <h3 class="text-xl font-semibold text-white mb-4">Me mata de uma vez</h3>
+                        <iframe width="110" height="200" src="https://www.myinstants.com/instant/me-mata-de-uma-vez-31687/embed/" frameborder="0" scrolling="no"></iframe>
                     </div>
                 </div>
             </div>
