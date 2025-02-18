@@ -26,6 +26,7 @@ class ProfileUpdateRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
             'steam_id' => ['nullable', 'string', 'max:255'],
+            'retroachievements_username' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

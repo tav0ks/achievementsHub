@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'steam_id',
+        'retroachievements_username',
         'password',
     ];
 

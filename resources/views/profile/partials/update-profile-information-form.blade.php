@@ -52,6 +52,12 @@
             <x-text-input id="steam_id" name="steam_id" type="text" class="mt-1 block w-full" :value="old('steam_id', $user->steam_id)" autofocus autocomplete="steam_id" />
             <x-input-error class="mt-2" :messages="$errors->get('steam_id')" />
         </div>
+        
+        <div>
+            <x-input-label for="retroachievements_username" :value="__('RetroAchievements Username')" />
+            <x-text-input id="retroachievements_username" name="retroachievements_username" type="text" class="mt-1 block w-full" :value="old('retroachievements_username', $user->retroachievements_username)" autofocus autocomplete="retroachievements_username" />
+            <x-input-error class="mt-2" :messages="$errors->get('retroachievements_username')" />
+        </div>
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>

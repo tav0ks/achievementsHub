@@ -101,4 +101,11 @@ class RetroAchievementsService
     {
         return $this->makeRequest('API_GetTopTenUsers.php');
     }
+
+    public function getUserProfile(string $username): ?array
+    {
+        return $this->makeRequest('API_GetUserProfile.php', [
+            'u' => $username
+        ]);
+    }
 }

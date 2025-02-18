@@ -5,20 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\SteamService;
 use Illuminate\Support\Facades\Auth;
+use App\Services\RetroAchievementsService;
 
 class DashboardController extends Controller
 {
     private SteamService $steamService;
+    private RetroAchievementsService $retroAchievementsService;
 
     /**
      * Dashboard constructor.
      * @param SteamService $steamService
      */
-    public function __construct(SteamService $steamService)
+    public function __construct(SteamService $steamService, RetroAchievementsService $retroAchievementsService)
     {
         $this->steamService = $steamService;
+        $this->retroAchievementsService = $retroAchievementsService;
     }
-
     /**
      * Show the dashboard.
      */
@@ -26,6 +28,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $steamData = [];
+        $retroData = [];
 
         if ($user->steam_id) {
             // Player Summary
@@ -65,6 +68,32 @@ class DashboardController extends Controller
             }
         }
 
-        return view('dashboard', array_merge(['user' => $user], $steamData));
+        if ($user->retroachievements_username) {
+            $retroProfile = $this->retroAchievementsService->getUserProfile($user->retroachievements_username);
+
+            if ($retroProfile) {
+                $retroData = [
+                    'profile' => [
+                        'username' => $retroProfile['User'],
+                        'avatar' => 'https://media.retroachievements.org' . $retroProfile['UserPic'],
+                        'memberSince' => $retroProfile['MemberSince'],
+                        'totalPoints' => $retroProfile['TotalPoints'],
+                        'totalTruePoints' => $retroProfile['TotalTruePoints'],
+                        'lastGame' => $this->retroAchievementsService->getGameSummary($retroProfile['LastGameID']),
+                        'richPresence' => $retroProfile['RichPresenceMsg'],
+                        'motto' => $retroProfile['Motto']
+                    ],
+                    'recentGames' => $this->retroAchievementsService->getRecentlyPlayedGames($user->retroachievements_username)
+                ];
+            }
+        }
+
+        // dd($retroData);
+
+        return view('dashboard', array_merge([
+            'user' => $user,
+            'steamData' => $steamData,
+            'retroData' => $retroData
+        ]));
     }
 }
