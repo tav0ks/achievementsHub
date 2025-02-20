@@ -68,16 +68,18 @@
                             Conecte suas contas da Steam e RetroAchievements para acompanhar seu progresso em um só
                             lugar.
                         </p>
-                        <div class="mt-8 flex justify-center gap-4">
-                            <a href="{{ route('register') }}"
-                                class="rounded-md bg-steamLight px-6 py-3 text-white transition hover:bg-steamLight/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-steamLight">
-                                Comece Agora
-                            </a>
-                            <a href="#features"
-                                class="rounded-md px-6 py-3 text-black ring-1 ring-steamLight transition hover:bg-steamLight/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-steamLight dark:text-white">
-                                Saiba Mais
-                            </a>
-                        </div>
+                        @if(Auth::guest()) 
+                            <div class="mt-8 flex justify-center gap-4">
+                                <a href="{{ route('register') }}"
+                                    class="rounded-md bg-steamLight px-6 py-3 text-white transition hover:bg-steamLight/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-steamLight">
+                                    Comece Agora
+                                </a>
+                                <a href="#features"
+                                    class="rounded-md px-6 py-3 text-black ring-1 ring-steamLight transition hover:bg-steamLight/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-steamLight dark:text-white">
+                                    Saiba Mais
+                                </a>
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Features Section -->
