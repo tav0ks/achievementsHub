@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SteamController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RetroAchievementsController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\GameProgressController;
+use App\Http\Controllers\RetroAchievementsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,13 +33,15 @@ Route::prefix('steam')->group(function () {
 
 Route::prefix('retro-achievements')->group(function () {
     Route::get('/game/{gameId}', [RetroAchievementsController::class, 'getGameSummary']);
+    Route::get('/game/{gameId}/progress/{username}', [GameProgressController::class, 'show'])->name('games.progress');
     Route::get('/user/{username}/game/{gameId}/achievements', [RetroAchievementsController::class, 'getUserAchievements']);
     Route::get('/user/{username}/recent-games', [RetroAchievementsController::class, 'getRecentlyPlayedGames']);
     Route::get('/top-ten-users', [RetroAchievementsController::class, 'getTopTenUsers']);
 });
 
+
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

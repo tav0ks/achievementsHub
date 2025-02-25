@@ -102,6 +102,23 @@ class RetroAchievementsService
         return $this->makeRequest('API_GetTopTenUsers.php');
     }
 
+    /**
+     * Recupera informações detalhadas do jogo e progresso do usuário
+     * 
+     * @param string $username Nome de usuário do RetroAchievements
+     * @param int $gameId ID do jogo
+     * @param bool $includeAwards Incluir metadados de conquistas do usuário
+     * @return array|null
+     */
+    public function getGameInfoAndUserProgress(string $username, int $gameId, bool $includeAwards = false): ?array
+    {
+        return $this->makeRequest('API_GetGameInfoAndUserProgress.php', [
+            'u' => $username,
+            'g' => $gameId,
+            'a' => $includeAwards ? 1 : 0
+        ]);
+    }
+
     public function getUserProfile(string $username): ?array
     {
         return $this->makeRequest('API_GetUserProfile.php', [
